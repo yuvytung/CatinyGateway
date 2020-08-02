@@ -1,0 +1,43 @@
+{
+  "generator-jhipster": {
+    "promptValues": {
+      "packageName": "org.regitiny.catiny.uaa",
+      "nativeLanguage": "vi"
+    },
+    "jhipsterVersion": "6.10.1",
+    "applicationType": "gateway",
+    "baseName": "CatinyGateway",
+    "packageName": "org.regitiny.catiny.uaa",
+    "packageFolder": "org/regitiny/catiny/uaa",
+    "serverPort": "10000",
+    "authenticationType": "uaa",
+    "uaaBaseName": "CatinyUAA",
+    "cacheProvider": "redis",
+    "enableHibernateCache": true,
+    "websocket": "spring-websocket",
+    "databaseType": "sql",
+    "devDatabaseType": "h2Disk",
+    "prodDatabaseType": "mariadb",
+    "searchEngine": "elasticsearch",
+    "messageBroker": false,
+    "serviceDiscoveryType": "eureka",
+    "buildTool": "gradle",
+    "enableSwaggerCodegen": true,
+    "embeddableLaunchScript": false,
+    "useSass": true,
+    "clientPackageManager": "npm",
+    "clientFramework": "react",
+    "clientTheme": "cerulean",
+    "clientThemeVariant": "primary",
+    "creationTimestamp": 1596384426425,
+    "testFrameworks": ["gatling", "cucumber", "protractor"],
+    "jhiPrefix": "jhi",
+    "entitySuffix": "",
+    "dtoSuffix": "DTO",
+    "otherModules": [],
+    "enableTranslation": true,
+    "nativeLanguage": "vi",
+    "languages": ["vi", "en"],
+    "blueprints": []
+  }
+}
