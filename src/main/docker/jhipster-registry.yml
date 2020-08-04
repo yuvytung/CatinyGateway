@@ -1,4 +1,4 @@
-version: '2'
+version: '3.8'
 services:
   jhipster-registry:
     image: jhipster/jhipster-registry:v6.3.0
