@@ -89,7 +89,7 @@ node {
     }
 
     stage('start docker catiny-gateway') {
-        sh "docker-compose -f src/main/docker/app.yml down"
+//        sh "docker-compose -f src/main/docker/app.yml down"
         sh "docker-compose -f src/main/docker/app.yml up -d"
         echo "Successful deployment"
     }
