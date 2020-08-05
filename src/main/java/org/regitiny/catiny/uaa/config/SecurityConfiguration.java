@@ -25,54 +25,60 @@ import org.springframework.web.client.RestTemplate;
 @Configuration
 @EnableResourceServer
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
-public class SecurityConfiguration extends ResourceServerConfigurerAdapter {
-    private final OAuth2Properties oAuth2Properties;
+public class SecurityConfiguration extends ResourceServerConfigurerAdapter
+{
+  private final OAuth2Properties oAuth2Properties;
 
-    private final CorsFilter corsFilter;
+  private final CorsFilter corsFilter;
 
-    public SecurityConfiguration(OAuth2Properties oAuth2Properties, CorsFilter corsFilter) {
-        this.oAuth2Properties = oAuth2Properties;
-        this.corsFilter = corsFilter;
-    }
+  public SecurityConfiguration(OAuth2Properties oAuth2Properties, CorsFilter corsFilter)
+  {
+    this.oAuth2Properties = oAuth2Properties;
+    this.corsFilter = corsFilter;
+  }
 
-    @Override
-    public void configure(HttpSecurity http) throws Exception {
-        http
-            .csrf()
-            .ignoringAntMatchers("/h2-console/**")
-            .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-        .and()
-            .addFilterBefore(corsFilter, CsrfFilter.class)
-            .headers()
-            .frameOptions()
-            .disable()
-        .and()
-            .sessionManagement()
-            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-        .and()
-            .authorizeRequests()
-            .antMatchers("/api/**").authenticated()
-            .antMatchers("/management/health").permitAll()
-            .antMatchers("/management/info").permitAll()
-            .antMatchers("/management/prometheus").permitAll()
-            .antMatchers("/management/**").hasAuthority(AuthoritiesConstants.ADMIN);
-    }
+  @Override
+  public void configure(HttpSecurity http) throws Exception
+  {
+    http
+      .csrf()
+      .ignoringAntMatchers("/h2-console/**")
+      .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+      .and()
+      .addFilterBefore(corsFilter, CsrfFilter.class)
+      .headers()
+      .frameOptions()
+      .disable()
+      .and()
+      .sessionManagement()
+      .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+      .and()
+      .authorizeRequests()
+      .antMatchers("/api/**").authenticated()
+      .antMatchers("/management/health").permitAll()
+      .antMatchers("/management/info").permitAll()
+      .antMatchers("/management/prometheus").permitAll()
+      .antMatchers("/management/**").hasAuthority(AuthoritiesConstants.ADMIN);
+  }
 
-    @Bean
-    public TokenStore tokenStore(JwtAccessTokenConverter jwtAccessTokenConverter) {
-        return new JwtTokenStore(jwtAccessTokenConverter);
-    }
+  @Bean
+  public TokenStore tokenStore(JwtAccessTokenConverter jwtAccessTokenConverter)
+  {
+    return new JwtTokenStore(jwtAccessTokenConverter);
+  }
 
-    @Bean
-    public JwtAccessTokenConverter jwtAccessTokenConverter(OAuth2SignatureVerifierClient signatureVerifierClient) {
-        return new OAuth2JwtAccessTokenConverter(oAuth2Properties, signatureVerifierClient);
-    }
+  @Bean
+  public JwtAccessTokenConverter jwtAccessTokenConverter(OAuth2SignatureVerifierClient signatureVerifierClient)
+  {
+    return new OAuth2JwtAccessTokenConverter(oAuth2Properties, signatureVerifierClient);
+  }
 
-    @Bean
-    @Qualifier("loadBalancedRestTemplate")
-    public RestTemplate loadBalancedRestTemplate(RestTemplateCustomizer customizer) {
-        RestTemplate restTemplate = new RestTemplate();
-        customizer.customize(restTemplate);
-        return restTemplate;
-    }
+  @Bean
+  @Qualifier("loadBalancedRestTemplate")
+  public RestTemplate loadBalancedRestTemplate(RestTemplateCustomizer customizer)
+  {
+    RestTemplate restTemplate = new RestTemplate();
+    customizer.customize(restTemplate);
+    return restTemplate;
+  }
 }

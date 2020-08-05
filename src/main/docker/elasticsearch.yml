@@ -1,9 +1,9 @@
-version: '3.8'
+version: '2'
 services:
   catinygateway-elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:6.8.8
-    # volumes:
-    #     - ~/volumes/jhipster/CatinyGateway/elasticsearch/:/usr/share/elasticsearch/data/
+    volumes:
+      - /root/volumes/jhipster/CatinyGateway/elasticsearch/:/usr/share/elasticsearch/data/
     ports:
       - 14000:9200
       - 14001:9300

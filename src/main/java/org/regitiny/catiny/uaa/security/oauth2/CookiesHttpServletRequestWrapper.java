@@ -10,23 +10,27 @@ import javax.servlet.http.HttpServletRequestWrapper;
  * The token refresh happens before authentication by the {@code OAuth2AuthenticationProcessingFilter}
  * so we must make sure that further in the filter chain, we have the new cookies and not the expired/missing ones.
  */
-class CookiesHttpServletRequestWrapper extends HttpServletRequestWrapper {
-    /**
-     * The new cookies of the request. Use these instead of the ones found in the wrapped request.
-     */
-    private Cookie[] cookies;
+class CookiesHttpServletRequestWrapper extends HttpServletRequestWrapper
+{
+  /**
+   * The new cookies of the request. Use these instead of the ones found in the wrapped request.
+   */
+  private final Cookie[] cookies;
 
-    public CookiesHttpServletRequestWrapper(HttpServletRequest request, Cookie[] cookies) {
-        super(request);
-        this.cookies = cookies;
-    }
+  public CookiesHttpServletRequestWrapper(HttpServletRequest request, Cookie[] cookies)
+  {
+    super(request);
+    this.cookies = cookies;
+  }
 
-    /**
-     * Return the modified cookies instead of the original ones.
-     * @return the modified cookies.
-     */
-    @Override
-    public Cookie[] getCookies() {
-        return cookies;
-    }
+  /**
+   * Return the modified cookies instead of the original ones.
+   *
+   * @return the modified cookies.
+   */
+  @Override
+  public Cookie[] getCookies()
+  {
+    return cookies;
+  }
 }

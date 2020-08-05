@@ -24,49 +24,52 @@ import static springfox.documentation.builders.PathSelectors.regex;
 
 @Configuration
 @Profile(JHipsterConstants.SPRING_PROFILE_SWAGGER)
-public class OpenApiConfiguration {
+public class OpenApiConfiguration
+{
 
-    @Bean
-    public SwaggerCustomizer noApiFirstCustomizer() {
-        return docket -> docket.select()
-            .apis(Predicates.not(RequestHandlerSelectors.basePackage("org.regitiny.catiny.uaa.web.api")));
-    }
+  @Bean
+  public SwaggerCustomizer noApiFirstCustomizer()
+  {
+    return docket -> docket.select()
+      .apis(Predicates.not(RequestHandlerSelectors.basePackage("org.regitiny.catiny.uaa.web.api")));
+  }
 
-    @Bean
-    public Docket apiFirstDocket(JHipsterProperties jHipsterProperties) {
-        JHipsterProperties.Swagger properties = jHipsterProperties.getSwagger();
-        Contact contact = new Contact(
-            properties.getContactName(),
-            properties.getContactUrl(),
-            properties.getContactEmail()
-        );
+  @Bean
+  public Docket apiFirstDocket(JHipsterProperties jHipsterProperties)
+  {
+    JHipsterProperties.Swagger properties = jHipsterProperties.getSwagger();
+    Contact contact = new Contact(
+      properties.getContactName(),
+      properties.getContactUrl(),
+      properties.getContactEmail()
+    );
 
-        ApiInfo apiInfo = new ApiInfo(
-            "API First " + properties.getTitle(),
-            properties.getDescription(),
-            properties.getVersion(),
-            properties.getTermsOfServiceUrl(),
-            contact,
-            properties.getLicense(),
-            properties.getLicenseUrl(),
-            new ArrayList<>()
-        );
+    ApiInfo apiInfo = new ApiInfo(
+      "API First " + properties.getTitle(),
+      properties.getDescription(),
+      properties.getVersion(),
+      properties.getTermsOfServiceUrl(),
+      contact,
+      properties.getLicense(),
+      properties.getLicenseUrl(),
+      new ArrayList<>()
+    );
 
-        return new Docket(DocumentationType.SWAGGER_2)
-            .groupName("openapi")
-            .host(properties.getHost())
-            .protocols(new HashSet<>(Arrays.asList(properties.getProtocols())))
-            .apiInfo(apiInfo)
-            .useDefaultResponseMessages(properties.isUseDefaultResponseMessages())
-            .forCodeGeneration(true)
-            .directModelSubstitute(ByteBuffer.class, String.class)
-            .genericModelSubstitutes(ResponseEntity.class)
-            .ignoredParameterTypes(Pageable.class)
-            .select()
-            .apis(RequestHandlerSelectors.basePackage("org.regitiny.catiny.uaa.web.api"))
-            .paths(regex(properties.getDefaultIncludePattern()))
-            .build();
-    }
+    return new Docket(DocumentationType.SWAGGER_2)
+      .groupName("openapi")
+      .host(properties.getHost())
+      .protocols(new HashSet<>(Arrays.asList(properties.getProtocols())))
+      .apiInfo(apiInfo)
+      .useDefaultResponseMessages(properties.isUseDefaultResponseMessages())
+      .forCodeGeneration(true)
+      .directModelSubstitute(ByteBuffer.class, String.class)
+      .genericModelSubstitutes(ResponseEntity.class)
+      .ignoredParameterTypes(Pageable.class)
+      .select()
+      .apis(RequestHandlerSelectors.basePackage("org.regitiny.catiny.uaa.web.api"))
+      .paths(regex(properties.getDefaultIncludePattern()))
+      .build();
+  }
 
 
 }

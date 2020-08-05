@@ -5,8 +5,12 @@ node {
         checkout scm
     }
 
-    stage('check java') {
+    stage('check java , node , docker , docker-compose') {
         sh "java -version"
+        sh "node -v"
+        sh "npm -v"
+        sh "docker -v"
+        sh "docker-compose -v"
     }
 
     stage('clean') {
@@ -21,15 +25,16 @@ node {
         sh "./gradlew npm_install -PnodeInstall --no-daemon"
     }
 
-    stage('backend tests') {
-        try {
-            sh "./gradlew test integrationTest -PnodeInstall --no-daemon"
-        } catch(err) {
-            throw err
-        } finally {
-            junit '**/build/**/TEST-*.xml'
-        }
-    }
+//  todo
+//    stage('backend tests') {
+//        try {
+//            sh "./gradlew test integrationTest -PnodeInstall --no-daemon"
+//        } catch(err) {
+//            throw err
+//        } finally {
+//            junit '**/build/**/TEST-*.xml'
+//        }
+//    }
 
     stage('frontend tests') {
         try {
@@ -46,9 +51,47 @@ node {
         archiveArtifacts artifacts: '**/build/libs/*.jar', fingerprint: true
     }
 
-    stage('quality analysis') {
-        withSonarQubeEnv('catiny-gateway-sonar') {
-            sh "./gradlew sonarqube --no-daemon"
+//  todo
+//    stage('quality analysis') {
+//        withSonarQubeEnv('catiny-gateway-sonar') {
+//            sh "./gradlew sonarqube --no-daemon"
+//        }
+//    }
+
+
+    stage('check jhipster-registry'){
+        try
+        {
+            sh "docker container inspect docker_jhipster-registry_1"
         }
+        catch (err)
+        {
+            echo "docker_jhipster-registry_1 not running"
+            sh "docker-compose -f src/main/docker/jhipster-registry-docker.yml up -d"
+        }
+    }
+
+    stage('check catiny-uaa'){
+        try
+        {
+            sh "docker container inspect docker_catinyuaa-app_1"
+        }
+        catch (err)
+        {
+            echo "docker_jhipster-registry_1 not running"
+            throw err
+        }
+    }
+
+    docker_catinyuaa-app_1
+
+    stage('build docker catiny-uaa') {
+        sh "./gradlew bootJar -Pprod jibDockerBuild --no-daemon"
+    }
+
+    stage('start docker catiny-uaa') {
+        sh "docker-compose -f src/main/docker/app.yml down"
+        sh "docker-compose -f src/main/docker/app.yml up -d"
+        echo "Successful deployment"
     }
 }
