@@ -8,8 +8,8 @@ openApiGenerate {
     generatorName = "spring"
     inputSpec = "$rootDir/src/main/resources/swagger/api.yml".toString()
     outputDir = "$buildDir/openapi".toString()
-    apiPackage = "org.regitiny.catiny.uaa.web.api"
-    modelPackage = "org.regitiny.catiny.uaa.web.api.model"
+    apiPackage = "org.regitiny.catiny.gateway.web.api"
+    modelPackage = "org.regitiny.catiny.gateway.web.api.model"
     apiFilesConstrainedTo = [""]
     modelFilesConstrainedTo = [""]
     supportingFilesConstrainedTo = ["ApiUtil.java"]

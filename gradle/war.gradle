@@ -1,7 +1,7 @@
 apply plugin: "war"
 
 bootWar {
-    mainClassName = "org.regitiny.catiny.uaa.CatinyGatewayApp"
+    mainClassName = "org.regitiny.catiny.gateway.CatinyGatewayApp"
     includes = ["WEB-INF/**", "META-INF/**"]
     webXml = file("${project.rootDir}/src/main/webapp/WEB-INF/web.xml")
 }

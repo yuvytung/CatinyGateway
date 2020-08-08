@@ -17,7 +17,7 @@ logging:
   level:
     ROOT: DEBUG
     io.github.jhipster: DEBUG
-    org.regitiny.catiny.uaa: DEBUG
+    org.regitiny.catiny.gateway: DEBUG
 
 eureka:
   instance:

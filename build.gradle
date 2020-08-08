@@ -29,7 +29,7 @@ plugins {
     //jhipster-needle-gradle-plugins - JHipster will add additional gradle plugins here
 }
 
-group = "org.regitiny.catiny.uaa"
+group = "org.regitiny.catiny.gateway"
 version = "0.0.1-SNAPSHOT"
 
 description = ""
@@ -89,7 +89,7 @@ eclipse {
 defaultTasks "bootRun"
 
 springBoot {
-    mainClassName = "org.regitiny.catiny.uaa.CatinyGatewayApp"
+    mainClassName = "org.regitiny.catiny.gateway.CatinyGatewayApp"
 }
 
 test {
@@ -179,7 +179,7 @@ liquibase {
             username "CatinyGateway"
             password ""
             changeLogFile project.ext.diffChangelogFile
-            referenceUrl "hibernate:spring:org.regitiny.catiny.uaa.domain?dialect=org.hibernate.dialect.H2Dialect&hibernate.physical_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy&hibernate.implicit_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy"
+            referenceUrl "hibernate:spring:org.regitiny.catiny.gateway.domain?dialect=org.hibernate.dialect.H2Dialect&hibernate.physical_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy&hibernate.implicit_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy"
             defaultSchemaName ""
             logLevel "debug"
             classpath "$buildDir/classes/java/main"

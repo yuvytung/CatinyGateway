@@ -1,14 +1,14 @@
 {
   "generator-jhipster": {
     "promptValues": {
-      "packageName": "org.regitiny.catiny.uaa",
+      "packageName": "org.regitiny.catiny.gateway",
       "nativeLanguage": "vi"
     },
     "jhipsterVersion": "6.10.1",
     "applicationType": "gateway",
     "baseName": "CatinyGateway",
-    "packageName": "org.regitiny.catiny.uaa",
-    "packageFolder": "org/regitiny/catiny/uaa",
+    "packageName": "org.regitiny.catiny.gateway",
+    "packageFolder": "org/regitiny/catiny/gateway",
     "serverPort": "10000",
     "authenticationType": "uaa",
     "uaaBaseName": "CatinyUAA",
