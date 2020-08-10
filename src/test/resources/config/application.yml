@@ -62,6 +62,8 @@ spring:
         # See https://github.com/jhipster/generator-jhipster/issues/10302
         node:
           max_local_storage_nodes: 2
+    jest:
+      uri: http://localhost:14000
   liquibase:
     contexts: test
   mail:
@@ -116,7 +118,14 @@ jhipster:
     logs: # Reports metrics in the logs
       enabled: true
       report-frequency: 60 # in seconds
-
+  http:
+    cache: # Used by the CachingHttpHeadersFilter
+      timeToLiveInDays: 1461
+  cache: # Cache configuration
+    redis: # Redis configuration
+      expiration: 3600 # By default objects stay 1 hour (in seconds) in the cache
+      server: redis://localhost:13000
+      cluster: false
 # ===================================================================
 # Application specific properties
 # Add your own application properties here, see the ApplicationProperties class

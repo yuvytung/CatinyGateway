@@ -1,0 +1,6 @@
+version: '2'
+services:
+  catinygateway-redis:
+    image: redis:6.0.4
+    ports:
+      - '13000:6379'
