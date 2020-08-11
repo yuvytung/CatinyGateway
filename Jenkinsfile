@@ -45,7 +45,6 @@ node {
 
 	stage('check integration')
 	{
-		sh "docker-compose -f src/main/docker/integration.yml up -d"
 		try
 		{
 			sh 'docker container inspect docker_catinygateway-elasticsearch_1'
@@ -131,3 +130,4 @@ node {
 		echo "Successful deployment"
 	}
 }
+
