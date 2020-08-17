@@ -53,8 +53,7 @@ public abstract class OAuth2TokenEndpointClientAdapter implements OAuth2TokenEnd
     addAuthentication(reqHeaders, formParams);
     HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(formParams, reqHeaders);
     log.debug("contacting OAuth2 token endpoint to login user: {}", username);
-    ResponseEntity<OAuth2AccessToken>
-      responseEntity = restTemplate.postForEntity(getTokenEndpoint(), entity, OAuth2AccessToken.class);
+    ResponseEntity<OAuth2AccessToken> responseEntity = restTemplate.postForEntity(getTokenEndpoint(), entity, OAuth2AccessToken.class);
     if (responseEntity.getStatusCode() != HttpStatus.OK)
     {
       log.debug("failed to authenticate user with OAuth2 token endpoint, status: {}", responseEntity.getStatusCodeValue());

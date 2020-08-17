@@ -13,6 +13,10 @@
 # http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
 # ===================================================================
 
+yuvytung:
+  server:
+    name: 103.142.139.174
+
 logging:
   level:
     ROOT: DEBUG
@@ -67,7 +71,7 @@ spring:
         path:
           home: build/elasticsearch
     jest:
-      uri: http://localhost:14000
+      uri: http://${yuvytung.server.name}:14000 # elasticsearch port 9200
   liquibase:
     # Remove 'faker' if you do not want the sample data to be loaded automatically
     contexts: dev, faker
@@ -110,7 +114,7 @@ jhipster:
   cache: # Cache configuration
     redis: # Redis configuration
       expiration: 3600 # By default objects stay 1 hour (in seconds) in the cache
-      server: redis://localhost:13000
+      server: redis://${yuvytung.server.name}:13000 # redis port 6379
       cluster: false
       # server: redis://localhost:6379,redis://localhost:16379,redis://localhost:26379
       # cluster: true

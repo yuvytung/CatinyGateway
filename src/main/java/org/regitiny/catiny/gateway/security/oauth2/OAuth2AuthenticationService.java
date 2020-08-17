@@ -60,8 +60,7 @@ public class OAuth2AuthenticationService
    * @return the {@link OAuth2AccessToken} as a {@link ResponseEntity}. Will return {@code OK (200)}, if successful.
    * If the UAA cannot authenticate the user, the status code returned by UAA will be returned.
    */
-  public ResponseEntity<OAuth2AccessToken> authenticate(HttpServletRequest request, HttpServletResponse response,
-                                                        Map<String, String> params)
+  public ResponseEntity<OAuth2AccessToken> authenticate(HttpServletRequest request, HttpServletResponse response, Map<String, String> params)
   {
     try
     {
