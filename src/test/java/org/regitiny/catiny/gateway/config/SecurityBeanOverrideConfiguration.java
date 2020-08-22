@@ -13,23 +13,27 @@ import org.springframework.web.client.RestTemplate;
  * This configuration must be included in {@code @SpringBootTest} in order to take effect.
  */
 @Configuration
-public class SecurityBeanOverrideConfiguration {
+public class SecurityBeanOverrideConfiguration
+{
 
-    @Bean
-    @Primary
-    public TokenStore tokenStore() {
-        return null;
-    }
+  @Bean
+  @Primary
+  public TokenStore tokenStore()
+  {
+    return null;
+  }
 
-    @Bean
-    @Primary
-    public JwtAccessTokenConverter jwtAccessTokenConverter() {
-        return null;
-    }
+  @Bean
+  @Primary
+  public JwtAccessTokenConverter jwtAccessTokenConverter()
+  {
+    return null;
+  }
 
-    @Bean
-    @Primary
-    public RestTemplate loadBalancedRestTemplate(RestTemplateCustomizer customizer) {
-        return null;
-    }
+  @Bean
+  @Primary
+  public RestTemplate loadBalancedRestTemplate(RestTemplateCustomizer customizer)
+  {
+    return null;
+  }
 }

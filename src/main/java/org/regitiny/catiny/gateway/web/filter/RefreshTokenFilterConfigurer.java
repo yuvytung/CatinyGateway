@@ -31,7 +31,7 @@ public class RefreshTokenFilterConfigurer extends SecurityConfigurerAdapter<Defa
    * Install {@link RefreshTokenFilter} as a servlet Filter.
    */
   @Override
-  public void configure(HttpSecurity http)
+  public void configure(HttpSecurity http) throws Exception
   {
     RefreshTokenFilter customFilter = new RefreshTokenFilter(authenticationService, tokenStore);
     http.addFilterBefore(customFilter, OAuth2AuthenticationProcessingFilter.class);

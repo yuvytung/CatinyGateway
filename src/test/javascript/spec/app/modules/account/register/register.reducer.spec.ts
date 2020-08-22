@@ -35,7 +35,15 @@ describe('Creating account tests', () => {
 
   it('should handle RESET', () => {
     expect(
-      register({ loading: true, registrationSuccess: true, registrationFailure: true, errorMessage: '' }, { type: ACTION_TYPES.RESET })
+      register(
+        {
+          loading: true,
+          registrationSuccess: true,
+          registrationFailure: true,
+          errorMessage: '',
+        },
+        { type: ACTION_TYPES.RESET }
+      )
     ).toEqual({
       ...initialState,
     });

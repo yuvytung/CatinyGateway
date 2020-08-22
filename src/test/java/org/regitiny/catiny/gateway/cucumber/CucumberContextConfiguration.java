@@ -9,12 +9,14 @@ import org.springframework.test.context.web.WebAppConfiguration;
 @SpringBootTest
 @WebAppConfiguration
 @ContextConfiguration(classes = CatinyGatewayApp.class)
-public class CucumberContextConfiguration {
+public class CucumberContextConfiguration
+{
 
-    @Before
-    public void setup_cucumber_spring_context() {
-        // Dummy method so cucumber will recognize this class as glue
-        // and use its context configuration.
-    }
+  @Before
+  public void setup_cucumber_spring_context()
+  {
+    // Dummy method so cucumber will recognize this class as glue
+    // and use its context configuration.
+  }
 
 }

@@ -1,16 +1,17 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import {shallow} from 'enzyme';
 
 import sinon from 'sinon';
 
 import LoadingBar from 'react-redux-loading-bar';
-import { Navbar, Nav } from 'reactstrap';
+import {Navbar, Nav} from 'reactstrap';
 
-import { Home, Brand } from 'app/shared/layout/header/header-components';
-import { AdminMenu, EntitiesMenu, AccountMenu, LocaleMenu } from 'app/shared/layout/menus';
+import {Home, Brand} from 'app/shared/layout/header/header-components';
+import {AdminMenu, EntitiesMenu, AccountMenu, LocaleMenu} from 'app/shared/layout/menus';
 import Header from 'app/shared/layout/header/header';
 
-describe('Header', () => {
+describe('Header', () =>
+{
   let mountedWrapper;
 
   const localeSpy = sinon.spy();
@@ -40,19 +41,23 @@ describe('Header', () => {
     isAuthenticated: false,
   };
 
-  const wrapper = (props = devProps) => {
-    if (!mountedWrapper) {
+  const wrapper = (props = devProps) =>
+  {
+    if (!mountedWrapper)
+    {
       mountedWrapper = shallow(<Header {...props} />);
     }
     return mountedWrapper;
   };
 
-  beforeEach(() => {
+  beforeEach(() =>
+  {
     mountedWrapper = undefined;
   });
 
   // All tests will go here
-  it('Renders a Header component in dev profile with LoadingBar, Navbar, Nav and dev ribbon.', () => {
+  it('Renders a Header component in dev profile with LoadingBar, Navbar, Nav and dev ribbon.', () =>
+  {
     const component = wrapper();
     // the created snapshot must be committed to source control
     expect(component).toMatchSnapshot();
@@ -72,7 +77,8 @@ describe('Header', () => {
     expect(ribbon.length).toEqual(1);
   });
 
-  it('Renders a Header component in prod profile with LoadingBar, Navbar, Nav.', () => {
+  it('Renders a Header component in prod profile with LoadingBar, Navbar, Nav.', () =>
+  {
     const component = wrapper(prodProps);
     // the created snapshot must be committed to source control
     expect(component).toMatchSnapshot();
@@ -91,7 +97,8 @@ describe('Header', () => {
     expect(ribbon.length).toEqual(0);
   });
 
-  it('Renders a Header component in prod profile with logged in User', () => {
+  it('Renders a Header component in prod profile with logged in User', () =>
+  {
     const nav = wrapper(userProps).find(Nav);
     expect(nav.find(AdminMenu).length).toEqual(0);
     expect(nav.find(EntitiesMenu).length).toEqual(1);
@@ -99,7 +106,8 @@ describe('Header', () => {
     expect(account.first().props().isAuthenticated).toEqual(true);
   });
 
-  it('Renders a Header component in prod profile with no logged in User', () => {
+  it('Renders a Header component in prod profile with no logged in User', () =>
+  {
     const nav = wrapper(guestProps).find(Nav);
     expect(nav.find(AdminMenu).length).toEqual(0);
     expect(nav.find(EntitiesMenu).length).toEqual(0);

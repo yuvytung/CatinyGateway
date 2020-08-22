@@ -22,6 +22,7 @@ import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
+import java.util.*;
 
 import static java.net.URLDecoder.decode;
 
@@ -45,7 +46,7 @@ public class WebConfigurer implements ServletContextInitializer, WebServerFactor
   }
 
   @Override
-  public void onStartup(ServletContext servletContext)
+  public void onStartup(ServletContext servletContext) throws ServletException
   {
     if (env.getActiveProfiles().length != 0)
     {

@@ -8,15 +8,18 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Res
 
 @Configuration
 @EnableResourceServer
-public class OAuth2TestConfiguration implements ResourceServerConfigurer {
-    // We set stateless to false to prevent the SecurityContext to be cleared when the respective filter is invoked
-    // Otherwise it is impossible to use @WithMockUser in combination with oauth2 in tests
-    @Override
-    public void configure(ResourceServerSecurityConfigurer security) {
-        security.stateless(false);
-    }
+public class OAuth2TestConfiguration implements ResourceServerConfigurer
+{
+  // We set stateless to false to prevent the SecurityContext to be cleared when the respective filter is invoked
+  // Otherwise it is impossible to use @WithMockUser in combination with oauth2 in tests
+  @Override
+  public void configure(ResourceServerSecurityConfigurer security)
+  {
+    security.stateless(false);
+  }
 
-    @Override
-    public void configure(HttpSecurity http) {
-    }
+  @Override
+  public void configure(HttpSecurity http)
+  {
+  }
 }

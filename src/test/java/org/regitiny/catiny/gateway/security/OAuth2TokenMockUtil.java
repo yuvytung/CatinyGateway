@@ -26,58 +26,66 @@ import static org.mockito.BDDMockito.given;
  * A bean providing simple mocking of OAuth2 access tokens for security integration tests.
  */
 @Component
-public class OAuth2TokenMockUtil {
+public class OAuth2TokenMockUtil
+{
 
-    @MockBean
-    private ResourceServerTokenServices tokenServices;
+  @MockBean
+  private ResourceServerTokenServices tokenServices;
 
-    private OAuth2Authentication createAuthentication(String username, Set<String> scopes, Set<String> roles) {
-        List<GrantedAuthority> authorities = roles.stream()
-            .map(SimpleGrantedAuthority::new)
-            .collect(Collectors.toList());
+  private OAuth2Authentication createAuthentication(String username, Set<String> scopes, Set<String> roles)
+  {
+    List<GrantedAuthority> authorities = roles.stream()
+      .map(SimpleGrantedAuthority::new)
+      .collect(Collectors.toList());
 
-        User principal = new User(username, "test", true, true, true, true, authorities);
-        Authentication authentication = new UsernamePasswordAuthenticationToken(principal, principal.getPassword(),
-            principal.getAuthorities());
+    User principal = new User(username, "test", true, true, true, true, authorities);
+    Authentication authentication = new UsernamePasswordAuthenticationToken(principal, principal.getPassword(),
+      principal.getAuthorities());
 
-        // Create the authorization request and OAuth2Authentication object
-        OAuth2Request authRequest = new OAuth2Request(null, "testClient", null, true, scopes, null, null, null,
-            null);
-        return new OAuth2Authentication(authRequest, authentication);
+    // Create the authorization request and OAuth2Authentication object
+    OAuth2Request authRequest = new OAuth2Request(null, "testClient", null, true, scopes, null, null, null,
+      null);
+    return new OAuth2Authentication(authRequest, authentication);
+  }
+
+  public RequestPostProcessor oauth2Authentication(String username, Set<String> scopes, Set<String> roles)
+  {
+    String uuid = String.valueOf(UUID.randomUUID());
+
+    given(tokenServices.loadAuthentication(uuid))
+      .willReturn(createAuthentication(username, scopes, roles));
+
+    given(tokenServices.readAccessToken(uuid)).willReturn(new DefaultOAuth2AccessToken(uuid));
+
+    return new OAuth2PostProcessor(uuid);
+  }
+
+  public RequestPostProcessor oauth2Authentication(String username, Set<String> scopes)
+  {
+    return oauth2Authentication(username, scopes, Collections.emptySet());
+  }
+
+  public RequestPostProcessor oauth2Authentication(String username)
+  {
+    return oauth2Authentication(username, Collections.emptySet());
+  }
+
+  public static class OAuth2PostProcessor implements RequestPostProcessor
+  {
+
+    private String token;
+
+    public OAuth2PostProcessor(String token)
+    {
+      this.token = token;
     }
 
-    public RequestPostProcessor oauth2Authentication(String username, Set<String> scopes, Set<String> roles) {
-        String uuid = String.valueOf(UUID.randomUUID());
+    @Override
+    public MockHttpServletRequest postProcessRequest(MockHttpServletRequest mockHttpServletRequest)
+    {
+      mockHttpServletRequest.addHeader("Authorization", "Bearer " + token);
 
-        given(tokenServices.loadAuthentication(uuid))
-            .willReturn(createAuthentication(username, scopes, roles));
-
-        given(tokenServices.readAccessToken(uuid)).willReturn(new DefaultOAuth2AccessToken(uuid));
-
-        return new OAuth2PostProcessor(uuid);
+      return mockHttpServletRequest;
     }
-
-    public RequestPostProcessor oauth2Authentication(String username, Set<String> scopes) {
-        return oauth2Authentication(username, scopes, Collections.emptySet());
-    }
-
-    public RequestPostProcessor oauth2Authentication(String username) {
-        return oauth2Authentication(username, Collections.emptySet());
-    }
-
-    public static class OAuth2PostProcessor implements RequestPostProcessor {
-
-        private String token;
-
-        public OAuth2PostProcessor(String token) {
-            this.token = token;
-        }
-
-        @Override
-        public MockHttpServletRequest postProcessRequest(MockHttpServletRequest mockHttpServletRequest) {
-            mockHttpServletRequest.addHeader("Authorization", "Bearer " + token);
-
-            return mockHttpServletRequest;
-        }
-    }
+  }
 }

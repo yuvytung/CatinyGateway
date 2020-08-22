@@ -41,7 +41,7 @@ public class UaaSignatureVerifierClient implements OAuth2SignatureVerifierClient
    * @return the public key used to verify JWT tokens; or {@code null}.
    */
   @Override
-  public SignatureVerifier getSignatureVerifier()
+  public SignatureVerifier getSignatureVerifier() throws Exception
   {
     try
     {

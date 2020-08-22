@@ -211,8 +211,14 @@ describe('Administration reducer tests', () => {
     it('should update state according to a successful websocket message receipt - only one activity per session', () => {
       const firstPayload = { id: 1, userLogin: username, page: 'home', sessionId: 'abc123' };
       const secondPayload = { id: 1, userLogin: username, page: 'user-management', sessionId: 'abc123' };
-      const firstState = administration(undefined, { type: ACTION_TYPES.WEBSOCKET_ACTIVITY_MESSAGE, payload: firstPayload });
-      const secondState = administration(firstState, { type: ACTION_TYPES.WEBSOCKET_ACTIVITY_MESSAGE, payload: secondPayload });
+      const firstState = administration(undefined, {
+        type: ACTION_TYPES.WEBSOCKET_ACTIVITY_MESSAGE,
+        payload: firstPayload,
+      });
+      const secondState = administration(firstState, {
+        type: ACTION_TYPES.WEBSOCKET_ACTIVITY_MESSAGE,
+        payload: secondPayload,
+      });
 
       expect(secondState).toMatchObject({
         tracker: { activities: [secondPayload] },
@@ -222,8 +228,14 @@ describe('Administration reducer tests', () => {
     it('should update state according to a successful websocket message receipt - remove logged out sessions', () => {
       const firstPayload = { id: 1, userLogin: username, page: 'home', sessionId: 'abc123' };
       const secondPayload = { id: 1, userLogin: username, page: 'logout', sessionId: 'abc123' };
-      const firstState = administration(undefined, { type: ACTION_TYPES.WEBSOCKET_ACTIVITY_MESSAGE, payload: firstPayload });
-      const secondState = administration(firstState, { type: ACTION_TYPES.WEBSOCKET_ACTIVITY_MESSAGE, payload: secondPayload });
+      const firstState = administration(undefined, {
+        type: ACTION_TYPES.WEBSOCKET_ACTIVITY_MESSAGE,
+        payload: firstPayload,
+      });
+      const secondState = administration(firstState, {
+        type: ACTION_TYPES.WEBSOCKET_ACTIVITY_MESSAGE,
+        payload: secondPayload,
+      });
 
       expect(secondState).toMatchObject({
         tracker: { activities: [] },

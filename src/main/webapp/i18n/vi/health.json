@@ -11,6 +11,7 @@
       "error": "Lỗi"
     },
     "indicator": {
+      "binders": "Truyền tải tin nhắn",
       "discoveryComposite": "Thành phần tìm kiếm dịch vụ",
       "refreshScope": "Phạm vị làm mới Microservice",
       "clientConfigServer": "Trung tâm cấu hình Microservice",

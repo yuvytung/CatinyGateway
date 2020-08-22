@@ -12,7 +12,7 @@ spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
-    url: jdbc:tc:mariadb:latest:///CatinyGateway?TC_MY_CNF=testcontainers/mariadb&useLegacyDatetimeCode=false&serverTimezone=${user.timezone}&TC_TMPFS=/testtmpfs:rw
+    url: jdbc:tc:mariadb:10.5.3:///CatinyGateway?TC_MY_CNF=testcontainers/mariadb&useLegacyDatetimeCode=false&serverTimezone=${user.timezone}&TC_TMPFS=/testtmpfs:rw
     username: root
     password:
     hikari:
