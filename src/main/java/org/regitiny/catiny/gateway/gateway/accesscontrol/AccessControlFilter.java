@@ -77,8 +77,7 @@ public class AccessControlFilter extends ZuulFilter
     // If the authorized endpoints list was left empty for this route, all access are allowed
     if (authorizedMicroservicesEndpoints.get(serviceName) == null)
     {
-      log.debug("Access Control: allowing access for {}, as no access control policy has been set up for " +
-        "service: {}", requestUri, serviceName);
+      log.debug("Access Control: allowing access for {}, as no access control policy has been set up for service: {}", requestUri, serviceName);
       return true;
     }
     else
