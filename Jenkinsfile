@@ -20,6 +20,7 @@ node {
 		sh "chmod +x gradlew"
 		sh "./gradlew clean --no-daemon"
 	}
+
 	stage('nohttp')
 	{
 		sh "./gradlew checkstyleNohttp --no-daemon"
@@ -38,13 +39,41 @@ node {
 		}
 		catch (err)
 		{
-			echo "docker_jhipster-registry_1 not running"
-			sh "docker-compose -f src/main/docker/jhipster-registry-docker.yml up -d"
+			echo "docker_jhipster-registry_1 is not running"
+			sh "docker-compose -f src/main/docker/jhipster-registry.yml up -d"
 		}
 	}
 
 	stage('check integration')
 	{
+		try
+		{
+			sh 'docker container inspect docker_catinygateway-mariadb_1'
+		}
+		catch (err)
+		{
+			echo 'mariadb is not running'
+			sh "docker-compose -f src/main/docker/mariadb.yml up -d"
+		}
+		try
+		{
+			sh 'docker container inspect docker_catinygateway-elasticsearch_1'
+		}
+		catch (err)
+		{
+			echo 'mariadb is not running'
+			sh "docker-compose -f src/main/docker/elasticsearch.yml up -d"
+		}
+		try
+		{
+			sh 'docker container inspect docker_catinygateway-redis_1'
+		}
+		catch (err)
+		{
+			echo 'mariadb is not running'
+			sh "docker-compose -f src/main/docker/redis.yml up -d"
+		}
+
 		try
 		{
 			sh 'docker container inspect docker_catinygateway-elasticsearch_1'
@@ -53,8 +82,22 @@ node {
 		}
 		catch (err)
 		{
-			echo 'mariadb ; redis or elasticsearch is not running'
-			sh "docker-compose -f src/ain/docker/integration.yml up -d"
+			echo 'Unable to start the required containers'
+			throw  err
+		}
+	}
+
+	stage('chack kafka')
+	{
+		try
+		{
+			sh "docker container inspect docker_zookeeper_1"
+			sh "docker container inspect docker_kafka_1"
+		}
+		catch (err)
+		{
+			echo "kafka or zookeeper is not running"
+			sh "docker-compose -f src/main/docker/kafka.yml up -d"
 		}
 	}
 
@@ -63,7 +106,7 @@ node {
 		try
 		{
 			sh "./gradlew build --no-daemon"
-			sh "./gradlew test integrationTest -PnodeInstall --no-daemon"
+//			sh "./gradlew test integrationTest -PnodeInstall --no-daemon"
 		}
 		catch (err)
 		{
