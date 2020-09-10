@@ -17,6 +17,9 @@ yuvytung:
   server:
     name: 103.142.139.174
 
+kafka:
+  bootstrap-servers: ${yuvytung.server.name}:10400
+
 logging:
   level:
     ROOT: DEBUG
