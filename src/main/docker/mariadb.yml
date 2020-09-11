@@ -2,8 +2,6 @@ version: '2'
 services:
   catinygateway-mariadb:
     image: mariadb:10.5.3
-    volumes:
-      - /root/volumes/jhipster/CatinyGateway/mysql/:/var/lib/mysql/
     environment:
       - MYSQL_USER=root
       - MYSQL_ALLOW_EMPTY_PASSWORD=yes

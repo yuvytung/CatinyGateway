@@ -1,0 +1,36 @@
+version: '2'
+services:
+  catinygateway-mariadb:
+    extends:
+      file: mariadb.yml
+      service: catinygateway-mariadb
+    volumes:
+      - /root/volumes/jhipster/CatinyGateway/mysql/:/var/lib/mysql/
+  catinygateway-redis:
+    extends:
+      file: redis.yml
+      service: catinygateway-redis
+  catinygateway-elasticsearch:
+    extends:
+      file: elasticsearch.yml
+      service: catinygateway-elasticsearch
+    volumes:
+      - /root/volumes/jhipster/CatinyGateway/elasticsearch/:/usr/share/elasticsearch/data/
+  kafka:
+    extends:
+      file: kafka.yml
+      service: kafka
+    environment:
+      - KAFKA_ADVERTISED_HOST_NAME=kafka
+      - KAFKA_ADVERTISED_LISTENERS=LISTENER_PRIVATE://kafka:9092,LISTENER_PUBLIC://103.142.139.174:10400
+  zookeeper:
+    extends:
+      file: kafka.yml
+      service: zookeeper
+  jhipster-registry:
+    extends:
+      file: jhipster-registry.yml
+      service: jhipster-registry
+    environment:
+      - SPRING_CLOUD_CONFIG_SERVER_COMPOSITE_0_TYPE=native
+      - SPRING_CLOUD_CONFIG_SERVER_COMPOSITE_0_SEARCH_LOCATIONS=file:./central-config/docker-config/
