@@ -11,7 +11,7 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:mariadb://catinygateway-mariadb:3306/catinygateway?useLegacyDatetimeCode=false&serverTimezone=UTC
       - JHIPSTER_CACHE_REDIS_SERVER=redis://catinygateway-redis:6379
       - JHIPSTER_CACHE_REDIS_CLUSTER=false
-      - JHIPSTER_SLEEP=100 # gives time for mariadb server to start
+      - JHIPSTER_SLEEP=120 # gives time for mariadb server to start
       - SPRING_DATA_JEST_URI=http://catinygateway-elasticsearch:9200
       - SPRING_ELASTICSEARCH_REST_URIS=http://catinygateway-elasticsearch:9200
       - KAFKA_BOOTSTRAPSERVERS=kafka:9092
