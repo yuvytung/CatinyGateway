@@ -110,6 +110,7 @@ node {
 
 	stage( 'Log display after 200 seconds from running')
 	{
+		sleep(200)
 		sh "docker logs docker_catinygateway-app_1 --tail 1000"
 	}
 }
