@@ -31,7 +31,6 @@ node {
 			sh 'docker container inspect docker_catinygateway-redis_1'
 			sh "docker container inspect docker_jhipster-registry_1"
 			sh "docker container inspect docker_zookeeper_1"
-			sleep(10000)
 			sh "docker container inspect docker_kafka_1"
 		}
 		catch (ignored)
