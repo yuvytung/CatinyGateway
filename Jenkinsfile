@@ -107,5 +107,10 @@ node {
 		sh "docker-compose -f src/main/docker/catiny-gateway.yml up -d"
 		echo "Successful deployment"
 	}
+
+	stage( 'Log display after 200 seconds from running')
+	{
+		sh "docker logs docker_catinygateway-app_1 --tail 1000"
+	}
 }
 
