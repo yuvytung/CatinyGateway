@@ -1,0 +1,55 @@
+{
+  "fluentMethods": false,
+  "clientRootFolder": "CatinyMessenger",
+  "relationships": [],
+  "fields": [
+    {
+      "fieldName": "uuid",
+      "fieldType": "UUID"
+    },
+    {
+      "fieldName": "string",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "integer",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "long0",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "float0",
+      "fieldType": "Float"
+    },
+    {
+      "fieldName": "double0",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "instant",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "zoneDateTime",
+      "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldName": "boolean0",
+      "fieldType": "Boolean"
+    }
+  ],
+  "changelogDate": "20200918082858",
+  "dto": "mapstruct",
+
+  "microserviceName": "CatinyMessenger",
+  "searchEngine": "elasticsearch",
+  "service": "serviceImpl",
+  "entityTableName": "master_user",
+  "databaseType": "cassandra",
+  "readOnly": false,
+  "jpaMetamodelFiltering": true,
+  "pagination": "infinite-scroll"
+
+}
