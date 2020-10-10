@@ -40,6 +40,7 @@ eureka:
 ribbon:
   eureka:
     enabled: true
+  ReadTimeout: 10000
 # See http://cloud.spring.io/spring-cloud-netflix/spring-cloud-netflix.html
 zuul: # those values must be configured depending on the application specific needs
   sensitive-headers: Cookie,Set-Cookie #see https://github.com/spring-cloud/spring-cloud-netflix/issues/3126
@@ -210,12 +211,12 @@ kafka:
   #  bootstrap-servers: localhost:9092
   consumer:
     key.deserializer: org.apache.kafka.common.serialization.StringDeserializer
-    value.deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    value.deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
     group.id: catiny-gateway
-    auto.offset.reset: earliest
+    auto.offset.reset: latest
   producer:
     key.serializer: org.apache.kafka.common.serialization.StringSerializer
-    value.serializer: org.apache.kafka.common.serialization.StringSerializer
+    value.serializer: org.springframework.kafka.support.serializer.JsonSerializer
 # ===================================================================
 # Application specific properties
 # Add your own application properties here, see the ApplicationProperties class
