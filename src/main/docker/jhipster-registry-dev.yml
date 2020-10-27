@@ -1,6 +1,6 @@
 version: '2'
 services:
-  jhipster-registry:
+  jhipster-registry-dev:
     image: jhipster/jhipster-registry:v6.3.0
     volumes:
       - ./central-server-config:/central-config
