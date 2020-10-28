@@ -1,5 +1,18 @@
+# ============================================================================
+# Add by yuvytung
+# This file use for server-dev : dev.catiny.com
+# ============================================================================
+
 version: '2'
 services:
+  catinygateway-app:
+    extends:
+      file: catiny-gateway.yml
+      service: catinygateway-app
+    environment:
+      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://admin:$${jhipster.registry.password}@dev.catiny.com:10200/eureka
+      - SPRING_CLOUD_CONFIG_URI=http://admin:$${jhipster.registry.password}@dev.catiny.com:10200/config
+      - JHIPSTER_SLEEP=120 # gives time for mariadb server to start
   catinygateway-mariadb:
     extends:
       file: mariadb.yml
@@ -22,7 +35,7 @@ services:
       service: kafka
     environment:
       - KAFKA_ADVERTISED_HOST_NAME=kafka
-      - KAFKA_ADVERTISED_LISTENERS=LISTENER_PRIVATE://kafka:9092,LISTENER_PUBLIC://catiny.com:10400
+      - KAFKA_ADVERTISED_LISTENERS=LISTENER_PRIVATE://kafka:9092,LISTENER_PUBLIC://dev.catiny.com:10400
   zookeeper:
     extends:
       file: kafka.yml
@@ -33,4 +46,4 @@ services:
       service: jhipster-registry
     environment:
       - SPRING_CLOUD_CONFIG_SERVER_COMPOSITE_0_TYPE=native
-      - SPRING_CLOUD_CONFIG_SERVER_COMPOSITE_0_SEARCH_LOCATIONS=file:./central-config/docker-config/
+      - SPRING_CLOUD_CONFIG_SERVER_COMPOSITE_0_SEARCH_LOCATIONS=file:./central-config/dev-config/

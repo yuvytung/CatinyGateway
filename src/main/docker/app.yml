@@ -1,9 +1,5 @@
 version: '2'
 services:
-  catinygateway-app:
-    extends:
-      file: catiny-gateway.yml
-      service: catinygateway-app
   catinygateway-mariadb:
     extends:
       file: mariadb.yml
