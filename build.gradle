@@ -335,7 +335,13 @@ dependencies {
     implementation "org.springframework.kafka:spring-kafka"
 
     //local remote yuvytung
-    implementation 'org.regitiny:tools:1.0-20200927.111024-1'
+    compile group: "org.regitiny", name: "tools" , version: "1.0-+" , changing: true
+}
+
+configurations.all
+{
+    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+    resolutionStrategy.cacheDynamicVersionsFor 0, 'seconds'
 }
 
 if (project.hasProperty("gae")) {

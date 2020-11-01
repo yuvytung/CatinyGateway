@@ -17,3 +17,4 @@ services:
       - KAFKA_BOOTSTRAPSERVERS=kafka:9092
     ports:
       - 10000:10000
+      - 80:10000

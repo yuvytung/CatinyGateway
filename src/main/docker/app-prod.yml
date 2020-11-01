@@ -32,5 +32,6 @@ services:
       file: jhipster-registry.yml
       service: jhipster-registry
     environment:
+      - SPRING_PROFILES_ACTIVE=prod,swagger,uaa
       - SPRING_CLOUD_CONFIG_SERVER_COMPOSITE_0_TYPE=native
       - SPRING_CLOUD_CONFIG_SERVER_COMPOSITE_0_SEARCH_LOCATIONS=file:./central-config/docker-config/
