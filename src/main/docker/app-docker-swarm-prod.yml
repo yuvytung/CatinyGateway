@@ -1,0 +1,79 @@
+version: '3.8'
+services:
+  catinygateway-app:
+    image: catinygateway
+    environment:
+      - _JAVA_OPTIONS=-Xms64m -Xmx512m
+      - SPRING_PROFILES_ACTIVE=prod,swagger
+      - MANAGEMENT_METRICS_EXPORT_PROMETHEUS_ENABLED=true
+      - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://admin:$${jhipster.registry.password}@jhipster-registry:8761/eureka
+      - SPRING_CLOUD_CONFIG_URI=http://admin:$${jhipster.registry.password}@jhipster-registry:8761/config
+      - SPRING_DATASOURCE_URL=jdbc:mariadb://catinygateway-mariadb:3306/catinygateway?useLegacyDatetimeCode=false&serverTimezone=UTC
+      - JHIPSTER_CACHE_REDIS_SERVER=redis://catinygateway-redis:6379
+      - JHIPSTER_CACHE_REDIS_CLUSTER=false
+      - JHIPSTER_SLEEP=150 # gives time for mariadb server to start (120s)
+      - SPRING_DATA_JEST_URI=http://catinygateway-elasticsearch:9200
+      - SPRING_ELASTICSEARCH_REST_URIS=http://catinygateway-elasticsearch:9200
+      - KAFKA_BOOTSTRAPSERVERS=kafka:9092
+    ports:
+      - 10000:10000
+      - 80:10000
+    deploy:
+      replicas: 2
+  catinygateway-mariadb:
+    image: mariadb:10.5.3
+    environment:
+      - MYSQL_USER=root
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+      - MYSQL_DATABASE=catinygateway
+    ports:
+      - 11000:3306
+    command: mysqld --lower_case_table_names=1 --skip-ssl --character_set_server=utf8mb4 --explicit_defaults_for_timestamp
+  #    volumes:
+  #      - /root/volumes/jhipster/CatinyGateway/mysql/:/var/lib/mysql/
+  catinygateway-redis:
+    image: redis:6.0.4
+    ports:
+      - '13000:6379'
+  catinygateway-elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.8.8
+    ports:
+      - 14000:9200
+      - 14001:9300
+    environment:
+      - 'ES_JAVA_OPTS=-Xms64m -Xmx512m'
+      - 'discovery.type=single-node'
+  #    volumes:
+  #      - /root/volumes/jhipster/CatinyGateway/elasticsearch/:/usr/share/elasticsearch/data/
+  zookeeper:
+    image: confluentinc/cp-zookeeper:5.5.0
+    ports:
+      - 10401:2181
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+  kafka:
+    image: confluentinc/cp-kafka:5.5.0
+    ports:
+      - 10400:10400
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: LISTENER_PRIVATE://kafka:9092,LISTENER_PUBLIC://catiny.com:10400
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: LISTENER_PRIVATE:PLAINTEXT,LISTENER_PUBLIC:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: LISTENER_PRIVATE
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_ADVERTISED_HOST_NAME: kafka
+  jhipster-registry:
+    image: jhipster/jhipster-registry:v6.3.0
+    volumes:
+      - ./central-server-config:/central-config
+    environment:
+      - _JAVA_OPTIONS=-Xms64m -Xmx512m
+      - SPRING_PROFILES_ACTIVE=dev,swagger,uaa
+      - SPRING_SECURITY_USER_PASSWORD=admin
+      - JHIPSTER_REGISTRY_PASSWORD=admin
+      - SPRING_CLOUD_CONFIG_SERVER_COMPOSITE_0_TYPE=native
+      - SPRING_CLOUD_CONFIG_SERVER_COMPOSITE_0_SEARCH_LOCATIONS=file:./central-config/docker-config/
+    ports:
+      - 10200:8761
